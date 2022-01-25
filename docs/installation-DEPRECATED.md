@@ -1,4 +1,4 @@
-# Installation
+# Installation with ST LINK V2 - DEPRECATED
 
 ## Summary
 This guide will walk you through installation of the software and drivers 
