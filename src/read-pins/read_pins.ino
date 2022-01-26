@@ -1,22 +1,23 @@
-float currentVals[10]{};
+#define ADC0 PA0
+#define ADC1 PA1
+#define ADC2 PA2
+#define ADC3 PA3
+#define ADC4 PA4
+#define ADC5 PA5
+#define ADC6 PA6
+#define ADC7 PA7
+#define ADC8 PB0
+#define ADC9 PB1
 
-// Populate with Resistor Values
-float resistorValues[10] = {10,10,10,10,10,10,10,10,10,10};
+// unsigned char: 8 bits (0-255)
+static const unsigned char analogPins[10] = {
+    ADC0, ADC1, ADC2, ADC3, ADC4,
+    ADC5, ADC6, ADC7, ADC8, ADC9
+};
 
-#define A0 0
-#define A1 1
-#define A2 2
-#define A3 3
-#define A4 4
-#define A5 5
-#define A6 6
-#define A7 7
-#define A8 8
-#define A9 9
-
-int analogPins[10] = {
-    A0, A1, A2, A3, A4,
-    A5, A6, A7, A8, A9
+static const double resistorValues[10] = {
+    10.0, 10.0, 10.0, 10.0, 10.0,
+    10.0, 10.0, 10.0, 10.0, 10.0
 };
 
 void setup() {
@@ -24,17 +25,20 @@ void setup() {
 }
 
 void loop() {
-  // Assumes that Analog Pins A0-A9 are used for input
-  for (int i{}; i < 10; i++){
-    // Convert analog value to corresponding voltage
-    currentVals[i] = analogRead(i) * (5.0 / 1023.0);
+    double currentVals[10] = { 0 };
 
-    // Current calculation using V=IR
-    currentVals[i] /= resistorValues[i];
-    
-    Serial.print(currentVals[i]);
-    Serial.print("\t");
-  }
-  Serial.print("\n\n");
-  delay(1000);
+    // Assumes that Analog Pins A0-A9 are used for input
+    for (int i = 0; i < (sizeof(analogPins) / sizeof(unsigned char)); i++){
+        // Convert analog value to corresponding voltage
+        currentVals[i] = analogRead(analogPins[i]) * (5.0 / 1023.0);
+
+        // Current calculation using V=IR
+        currentVals[i] /= resistorValues[i];
+
+        Serial.print(currentVals[i]);
+        Serial.print("\t");
+    }
+
+    Serial.println("\n");
+    delay(1000);
 }

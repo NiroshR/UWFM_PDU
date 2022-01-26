@@ -1,4 +1,4 @@
-# Bootloading the Arduino Blue Pill
+# Bootloading the Arduino Blue Pill - DEPRECATED
 
 The Arduino Blue Pill does not ship with a bootloader installed, this means 
 we cannot easily connect and upload builds to it using the attached USB type-B
@@ -126,7 +126,7 @@ Arduino
 1. Open your Arduino IDE, open the `Tools` dropdown from the menu bar.
 
 2. Select the appropriate board by selecting
-   `Board: <"Something"> >> STM32F1 Boards (Arduino_STM32 >> Generic STM32F103C series`
+   `Board: <"Something"> >> STM32F1 Boards (Arduino_STM32) >> Generic STM32F103C series`
    ([screenshot](images/board-selection.png))
 
 3. Verify the following settings in the same `Tools` menu:
