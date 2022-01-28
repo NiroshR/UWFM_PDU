@@ -1,44 +1,34 @@
-#define ADC0 PA0
-#define ADC1 PA1
-#define ADC2 PA2
-#define ADC3 PA3
-#define ADC4 PA4
-#define ADC5 PA5
-#define ADC6 PA6
-#define ADC7 PA7
-#define ADC8 PB0
-#define ADC9 PB1
+#include "uwfm.h"
 
-// unsigned char: 8 bits (0-255)
-static const unsigned char analogPins[10] = {
-    ADC0, ADC1, ADC2, ADC3, ADC4,
-    ADC5, ADC6, ADC7, ADC8, ADC9
-};
-
-static const double resistorValues[10] = {
-    10.0, 10.0, 10.0, 10.0, 10.0,
-    10.0, 10.0, 10.0, 10.0, 10.0
-};
+static uint32_t last_poll = 0;
 
 void setup() {
-  Serial.begin(9600);
+    // Set the serial port to a baud rate of 9600, this is used for printing
+    // to the serial monitor/plotter in the Arduino IDE.
+    Serial.begin(9600);
+
+    // Change the analog read resolution to 12-bits. The default is 10-bits.
+    analogReadResolution(12);
 }
 
 void loop() {
-    double currentVals[10] = { 0 };
+    // Use millis instead of delay. It simply returns the number of
+    // milliseconds passed since the board began to run. Native type is
+    // unsigned long, goes to 50 days. Most importantly, it doesn't block other
+    // logic in this loop, it simply skips the items in the if statement.
+    if ((millis() / POLL_RATE) != last_poll) {
+        last_poll = millis() / POLL_RATE;
 
-    // Assumes that Analog Pins A0-A9 are used for input
-    for (int i = 0; i < (sizeof(analogPins) / sizeof(unsigned char)); i++){
-        // Convert analog value to corresponding voltage
-        currentVals[i] = analogRead(analogPins[i]) * (5.0 / 1023.0);
+        // Loop through all analog inputs.
+        for (uint8_t i = 0;
+             i < (sizeof(uwfm::adcPins) / sizeof(uint8_t));
+             i++)
+        {
+            double current = uwfm::calculateCurrent(i);
+            Serial.print(current);
+            Serial.print("\t");
+        }
 
-        // Current calculation using V=IR
-        currentVals[i] /= resistorValues[i];
-
-        Serial.print(currentVals[i]);
-        Serial.print("\t");
+        Serial.println("\n");
     }
-
-    Serial.println("\n");
-    delay(1000);
 }
