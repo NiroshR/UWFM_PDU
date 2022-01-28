@@ -7,6 +7,8 @@ To start we will need to get the following:
 - [ST-Link V2 driver](https://www.st.com/en/development-tools/stsw-link009.html)
 - [STM32CubeProgrammer](https://www.st.com/en/development-tools/stm32cubeprog.html)
 
+## BOOT Selector
+
 You will be asked to provide your name and email to download the content from
 the ST website. Once you've downloaded and installed all the sofware and 
 drivers, we will need to move the `BOOT0` select from `0` to `1`. This simply
@@ -28,6 +30,9 @@ interference between the Arduino Blue Pill and the relay on the PDU.
 <img src="images/st-link-v2.JPEG" width="512">
 
 You will also need four jumper wires to connect to the Blue Pill.
+
+### FTDI Serial Board (Optional but recommended)
+<img src="images/ftdi-board.jpg" width="512">
 
 ## Arduino IDE Setup
 
@@ -114,6 +119,10 @@ in the [libraries](../libraries) folder.
 
 ## Test the Code
 
+When flashing code to the Arduino, place the `BOOT0` pin to the `1` position,
+if you are not flashing code and simply want to run existing code on the Blue 
+Pill's memory, place the jumper on the `0` position.
+
 1. Create a sketch with the [exo_can_simple_test](../src/exo_can_simple_test)
    code in the Arduino IDE.
 
@@ -121,3 +130,13 @@ in the [libraries](../libraries) folder.
 
 3. Click the upload button - the right hand arrow on the top left of the IDE.
 
+## Grabbing Serial Logging
+
+1. Connect the FTDI board ([screenshot](images/ftdi-pinout.png))
+
+2. Download the drivers from the
+   [VCP site](https://ftdichip.com/drivers/vcp-drivers/)
+
+3. Select the appropriate Port as `COM<N>` from the `Tools` menu
+
+4. Open up the Serial Monitor from the menu: `Tools >> Serial Monitor`
