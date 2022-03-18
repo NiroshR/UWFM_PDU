@@ -62,12 +62,10 @@ void canTX(msgFrm frm, bool prt = false)  // send a CAN Bus message
     can.transmit(frm.txMsgID, frm.txMsg.bytes, msgLen);
 
 #ifdef DEBUG
-    static uint16_t buff[4];
-    memcpy(buff, frm.txMsg.bytes, sizeof(buff));
     sprintf(cBuff, "tx @%02x #%d \t", frm.txMsgID, msgLen);
     Serial.print(cBuff);
-    for (int j = 0; j < (msgLen % 2); j++) {
-        sprintf(cBuff, "%6d ", buff[j]);
+    for (int j = 0; j < msgLen; j++) {
+        sprintf(cBuff, "%02x ", frm.txMsg.bytes[j]);
         Serial.print(cBuff);
     }
     Serial.println();
