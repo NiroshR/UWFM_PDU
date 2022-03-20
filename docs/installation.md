@@ -27,7 +27,7 @@ position simply puts it into programming mode instead of run mode.
 interference between the Arduino Blue Pill and the relay on the PDU.
 
 ### ST-Link V2 
-<img src="images/st-link-v2.JPEG" width="512">
+<img src="images/st-link-v2-oem.jpg" width="512">
 
 You will also need four jumper wires to connect to the Blue Pill.
 

@@ -121,7 +121,7 @@ enum idtype : bool
 
 union MSG {
   uint8_t bytes[8] = {0xff, 0xff, 0xff, 0x00, 0x00, 0xff, 0xff, 0xff};
-  int16_t int16[4];
+  uint16_t uint16[4];
   int32_t int32[2];
   int64_t int64;
 };
